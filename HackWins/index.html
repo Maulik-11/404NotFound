@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Expense Tracker - Login</title>
+    <title>HackWins - Expense Tracker</title>
     <style>
         * {
             margin: 0;
@@ -45,6 +45,17 @@
             }
         }
 
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
         @keyframes pulse {
             0%, 100% {
                 transform: scale(1);
@@ -58,68 +69,174 @@
             animation: fadeIn 0.6s ease-out;
         }
 
-        .auth-container {
+        .container {
             width: 100%;
-            max-width: 450px;
+            max-width: 500px;
         }
 
-        .auth-card {
+        .card {
             background: var(--card-bg);
-            padding: 40px;
-            border-radius: 20px;
+            border-radius: 16px;
             box-shadow: var(--shadow-lg);
+            display: none;
+            animation: slideInUp 0.8s ease-out;
         }
 
-        .logo-animation {
+        .card.active {
+            display: block;
+        }
+
+        /* ===== LANDING PAGE ===== */
+        .landing-card {
+            padding: 60px 40px;
+        }
+
+        .landing-content {
+            text-align: center;
+        }
+
+        .app-logo {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 30px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            color: white;
+            font-weight: bold;
+        }
+
+        .landing-card h1 {
+            color: var(--text-primary);
+            font-size: 32px;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .landing-card .subtitle {
+            color: var(--text-secondary);
+            font-size: 16px;
+            margin-bottom: 40px;
+            line-height: 1.5;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 15px;
+            flex-direction: column;
+        }
+
+        .btn-landing {
+            padding: 14px 32px;
+            font-size: 16px;
+            font-weight: 600;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-login-landing {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+        }
+
+        .btn-login-landing:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 12px rgba(99, 102, 241, 0.3);
+        }
+
+        .btn-register-landing {
+            background: white;
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+        }
+
+        .btn-register-landing:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 12px rgba(99, 102, 241, 0.3);
+        }
+
+        .features {
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 1px solid var(--border-color);
+            text-align: left;
+        }
+
+        .features-title {
+            color: var(--text-primary);
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .feature-list {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .feature-item {
+            padding: 12px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .feature-item::before {
+            content: "✓ ";
+            color: var(--success-color);
+            font-weight: bold;
+            margin-right: 5px;
+        }
+
+        /* ===== AUTH CARD ===== */
+        .auth-card {
+            padding: 40px;
+        }
+
+        .back-button {
+            float: left;
+            background: none;
+            border: none;
+            color: var(--primary-color);
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-bottom: 15px;
+            transition: color 0.3s ease;
+            padding: 0;
+        }
+
+        .back-button:hover {
+            color: var(--secondary-color);
+        }
+
+        .auth-header {
             text-align: center;
             margin-bottom: 30px;
+            clear: both;
         }
 
-        .logo-animation h1 {
-            font-size: 2.5em;
-            color: var(--primary-color);
+        .auth-header h1 {
+            color: var(--text-primary);
+            font-size: 28px;
+            font-weight: 700;
             margin-bottom: 10px;
-            animation: pulse 2s infinite;
         }
 
-        .tagline {
+        .auth-header p {
             color: var(--text-secondary);
-            font-size: 1.1em;
-        }
-
-        .auth-tabs {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 25px;
-            border-bottom: 2px solid var(--border-color);
-        }
-
-        .tab-btn {
-            flex: 1;
-            padding: 12px;
-            border: none;
-            background: none;
-            cursor: pointer;
-            font-size: 1.1em;
-            font-weight: 600;
-            color: var(--text-secondary);
-            transition: all 0.3s ease;
-            border-bottom: 3px solid transparent;
-            margin-bottom: -2px;
-        }
-
-        .tab-btn.active {
-            color: var(--primary-color);
-            border-bottom-color: var(--primary-color);
-        }
-
-        .auth-form {
-            display: none;
-        }
-
-        .auth-form.active {
-            display: block;
-            animation: fadeIn 0.3s ease-out;
+            font-size: 14px;
         }
 
         .form-group {
@@ -131,14 +248,16 @@
             margin-bottom: 8px;
             font-weight: 600;
             color: var(--text-primary);
+            font-size: 14px;
         }
 
         .form-group input {
             width: 100%;
             padding: 12px 15px;
-            border: 2px solid var(--border-color);
-            border-radius: 10px;
-            font-size: 1em;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: inherit;
             transition: all 0.3s ease;
         }
 
@@ -148,22 +267,106 @@
             box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
         }
 
+        .form-group input::placeholder {
+            color: var(--text-secondary);
+        }
+
+        .remember-forgot {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 13px;
+            margin-bottom: 25px;
+        }
+
+        .remember-forgot a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .remember-forgot a:hover {
+            color: var(--secondary-color);
+        }
+
+        .password-requirements {
+            margin-top: 8px;
+            font-size: 12px;
+            color: var(--text-secondary);
+            padding: 10px 12px;
+            background: #f8f9fa;
+            border-radius: 6px;
+            display: none;
+        }
+
+        .password-requirements.show {
+            display: block;
+        }
+
+        .requirement {
+            margin: 4px 0;
+        }
+
+        .requirement.met {
+            color: var(--success-color);
+        }
+
+        .requirement.met::before {
+            content: "✓ ";
+            font-weight: bold;
+        }
+
+        .requirement:not(.met)::before {
+            content: "○ ";
+        }
+
+        .terms {
+            display: flex;
+            gap: 8px;
+            font-size: 12px;
+            margin: 20px 0;
+            align-items: flex-start;
+        }
+
+        .terms input {
+            width: auto;
+            margin-top: 3px;
+            cursor: pointer;
+        }
+
+        .terms label {
+            margin-bottom: 0;
+            font-weight: normal;
+            line-height: 1.5;
+        }
+
+        .terms a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .terms a:hover {
+            text-decoration: underline;
+        }
+
         .btn-primary {
             width: 100%;
-            padding: 14px;
+            padding: 12px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
             border: none;
-            border-radius: 10px;
-            font-size: 1.1em;
+            border-radius: 8px;
+            font-size: 15px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            color: white;
         }
 
         .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: var(--shadow-lg);
+            box-shadow: 0 8px 12px rgba(99, 102, 241, 0.3);
         }
 
         .btn-primary:disabled {
@@ -172,17 +375,36 @@
             transform: none;
         }
 
+        .switch-auth {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .switch-auth a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .switch-auth a:hover {
+            color: var(--secondary-color);
+        }
+
         .error-message {
             padding: 12px;
             border-radius: 8px;
             margin-top: 15px;
             text-align: center;
             display: none;
+            animation: fadeIn 0.3s ease-out;
         }
 
         .error-message.show {
             display: block;
-            animation: fadeIn 0.3s ease-out;
         }
 
         .loader {
@@ -198,62 +420,180 @@
         @keyframes spin {
             to { transform: rotate(360deg); }
         }
+
+        @media (max-width: 480px) {
+            .landing-card {
+                padding: 40px 25px;
+            }
+
+            .auth-card {
+                padding: 30px 20px;
+            }
+
+            .landing-card h1,
+            .auth-header h1 {
+                font-size: 24px;
+            }
+
+            .button-group {
+                gap: 12px;
+            }
+
+            .btn-landing {
+                padding: 12px 24px;
+                font-size: 14px;
+            }
+
+            .feature-list {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 </head>
 <body>
-    <div class="auth-container">
-        <div class="auth-card fade-in">
-            <div class="logo-animation">
-                <h1>💰 WealthWise AI</h1>
-                <p class="tagline">Emphasizes Intelligent Financial Decisions</p>
-            </div>
-            
-            <div class="auth-tabs">
-                <button class="tab-btn active" id="loginTab" type="button">Login</button>
-                <button class="tab-btn" id="registerTab" type="button">Register</button>
-            </div>
-            
-            <!-- Login Form -->
-            <form id="loginForm" class="auth-form active">
-                <div class="form-group">
-                    <label for="loginEmail">Email</label>
-                    <input type="email" id="loginEmail" placeholder="Enter your email" required>
-                </div>
+    <div class="container">
+        <div id="landingCard" class="card landing-card active">
+            <div class="landing-content">
+                <div class="app-logo">💰</div>
                 
+                <h1>WealthWise AI</h1>
+                <p class="subtitle">Emphasizes Intelligent Financial Decisions</p>
+                
+                <div class="button-group">
+                    <button type="button" class="btn-landing btn-login-landing" onclick="showLoginForm()">Login</button>
+                    <button type="button" class="btn-landing btn-register-landing" onclick="showRegisterForm()">Create Account</button>
+                </div>
+
+                <div class="features">
+                    <p class="features-title">Key Features</p>
+                    <div class="feature-list">
+                        <div class="feature-item">Track Expenses</div>
+                        <div class="feature-item">Smart Analytics</div>
+                        <div class="feature-item">Budget Goals</div>
+                        <div class="feature-item">Real-time Reports</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Login Form -->
+        <div id="loginCard" class="card auth-card">
+            <button type="button" class="back-button" onclick="showLanding()">← Back</button>
+            
+            <div class="auth-header">
+                <h1>Welcome Back</h1>
+                <p>Sign in to access your dashboard</p>
+            </div>
+
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="loginEmail">Email Address</label>
+                    <input 
+                        type="email" 
+                        id="loginEmail" 
+                        placeholder="Enter your email"
+                        required
+                    >
+                </div>
+
                 <div class="form-group">
                     <label for="loginPassword">Password</label>
-                    <input type="password" id="loginPassword" placeholder="Enter your password" required>
+                    <input 
+                        type="password" 
+                        id="loginPassword" 
+                        placeholder="Enter your password"
+                        required
+                    >
                 </div>
-                
-                <button type="submit" class="btn-primary" id="loginBtn">Login</button>
+
+                <div class="remember-forgot">
+                    <label style="display: flex; gap: 5px; font-weight: normal; cursor: pointer;">
+                        <input type="checkbox" name="remember" style="width: auto; cursor: pointer;">
+                        Remember me
+                    </label>
+                    <a href="#">Forgot password?</a>
+                </div>
+
+                <button type="submit" class="btn-primary" id="loginBtn">Sign In</button>
             </form>
+
+            <div class="switch-auth">
+                Don't have an account? <a onclick="showRegisterForm()">Create one</a>
+            </div>
+
+            <div id="loginError" class="error-message"></div>
+        </div>
+
+        <!-- Register Form -->
+        <div id="registerCard" class="card auth-card">
+            <button type="button" class="back-button" onclick="showLanding()">← Back</button>
             
-            <!-- Register Form -->
-            <form id="registerForm" class="auth-form">
+            <div class="auth-header">
+                <h1>Create Account</h1>
+                <p>Join HackWins and manage your expenses</p>
+            </div>
+
+            <form id="registerForm">
                 <div class="form-group">
                     <label for="registerName">Full Name</label>
-                    <input type="text" id="registerName" placeholder="Enter your full name" required>
+                    <input 
+                        type="text" 
+                        id="registerName" 
+                        placeholder="Enter your full name"
+                        required
+                    >
                 </div>
-                
+
                 <div class="form-group">
-                    <label for="registerEmail">Email</label>
-                    <input type="email" id="registerEmail" placeholder="Enter your email" required>
+                    <label for="registerEmail">Email Address</label>
+                    <input 
+                        type="email" 
+                        id="registerEmail" 
+                        placeholder="Enter your email"
+                        required
+                    >
                 </div>
-                
+
                 <div class="form-group">
                     <label for="registerPassword">Password</label>
-                    <input type="password" id="registerPassword" placeholder="Create a password (min 6 characters)" required minlength="6">
+                    <input 
+                        type="password" 
+                        id="registerPassword" 
+                        placeholder="Create a strong password"
+                        required
+                    >
+                    <div class="password-requirements">
+                        <div class="requirement" data-check="length">At least 8 characters</div>
+                        <div class="requirement" data-check="uppercase">One uppercase letter</div>
+                        <div class="requirement" data-check="number">One number</div>
+                    </div>
                 </div>
-                
+
                 <div class="form-group">
                     <label for="confirmPassword">Confirm Password</label>
-                    <input type="password" id="confirmPassword" placeholder="Confirm your password" required>
+                    <input 
+                        type="password" 
+                        id="confirmPassword" 
+                        placeholder="Re-enter your password"
+                        required
+                    >
                 </div>
-                
+
+                <div class="terms">
+                    <input type="checkbox" id="terms" name="terms" required>
+                    <label for="terms">
+                        I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>
+                    </label>
+                </div>
+
                 <button type="submit" class="btn-primary" id="registerBtn">Create Account</button>
             </form>
-            
-            <div id="errorMessage" class="error-message"></div>
+
+            <div class="switch-auth">
+                Already have an account? <a onclick="showLoginForm()">Sign in</a>
+            </div>
+
+            <div id="registerError" class="error-message"></div>
         </div>
     </div>
     
@@ -262,11 +602,11 @@
         import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
         import { getDatabase, ref, set } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
 
-        // ✅ FIXED Firebase Configuration - Correct Database URL
+        // ✅ Firebase Configuration
         const firebaseConfig = {
             apiKey: "AIzaSyA3PFNIhXjyRyVtDagpVACoGjFDMVkWPzo",
             authDomain: "expense-tracker-app-9f58b.firebaseapp.com",
-            databaseURL: "https://expense-tracker-app-9f58b-default-rtdb.asia-southeast1.firebasedatabase.app", // ✅ FIXED!
+            databaseURL: "https://expense-tracker-app-9f58b-default-rtdb.asia-southeast1.firebasedatabase.app",
             projectId: "expense-tracker-app-9f58b",
             storageBucket: "expense-tracker-app-9f58b.firebasestorage.app",
             messagingSenderId: "292372924041",
@@ -279,29 +619,62 @@
 
         console.log('✅ Firebase initialized successfully!');
 
-        // Tab switching
-        const loginTab = document.getElementById('loginTab');
-        const registerTab = document.getElementById('registerTab');
-        const loginForm = document.getElementById('loginForm');
-        const registerForm = document.getElementById('registerForm');
+        // ===== PAGE NAVIGATION =====
+        window.showLanding = function() {
+            document.getElementById('landingCard').classList.add('active');
+            document.getElementById('loginCard').classList.remove('active');
+            document.getElementById('registerCard').classList.remove('active');
+            clearErrors();
+        };
 
-        loginTab.addEventListener('click', function() {
-            loginTab.classList.add('active');
-            registerTab.classList.remove('active');
-            loginForm.classList.add('active');
-            registerForm.classList.remove('active');
-            clearError();
+        window.showLoginForm = function() {
+            document.getElementById('landingCard').classList.remove('active');
+            document.getElementById('loginCard').classList.add('active');
+            document.getElementById('registerCard').classList.remove('active');
+            clearErrors();
+        };
+
+        window.showRegisterForm = function() {
+            document.getElementById('landingCard').classList.remove('active');
+            document.getElementById('loginCard').classList.remove('active');
+            document.getElementById('registerCard').classList.add('active');
+            clearErrors();
+        };
+
+        // ===== PASSWORD REQUIREMENTS =====
+        const passwordInput = document.getElementById('registerPassword');
+        const passwordReqs = document.querySelector('.password-requirements');
+
+        passwordInput.addEventListener('focus', () => {
+            passwordReqs.classList.add('show');
         });
 
-        registerTab.addEventListener('click', function() {
-            registerTab.classList.add('active');
-            loginTab.classList.remove('active');
-            registerForm.classList.add('active');
-            loginForm.classList.remove('active');
-            clearError();
+        passwordInput.addEventListener('blur', () => {
+            if (passwordInput.value === '') {
+                passwordReqs.classList.remove('show');
+            }
         });
 
-        // ✅ FIXED Register Handler
+        passwordInput.addEventListener('input', () => {
+            const password = passwordInput.value;
+
+            document.querySelector('[data-check="length"]').classList.toggle(
+                'met',
+                password.length >= 8
+            );
+
+            document.querySelector('[data-check="uppercase"]').classList.toggle(
+                'met',
+                /[A-Z]/.test(password)
+            );
+
+            document.querySelector('[data-check="number"]').classList.toggle(
+                'met',
+                /[0-9]/.test(password)
+            );
+        });
+
+        // ===== REGISTER HANDLER =====
         document.getElementById('registerForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             
@@ -309,75 +682,66 @@
             const email = document.getElementById('registerEmail').value.trim();
             const password = document.getElementById('registerPassword').value;
             const confirmPassword = document.getElementById('confirmPassword').value;
+            const termsAccepted = document.getElementById('terms').checked;
             const btn = document.getElementById('registerBtn');
             
-            // Clear previous errors
-            clearError();
+            clearErrors();
             
-            // Validation
-            if (!name || !email || !password) {
-                showError('❌ Please fill in all fields!');
+            if (!name || !email || !password || !confirmPassword) {
+                showRegisterError('❌ Please fill in all fields');
                 return;
             }
 
             if (name.length < 2) {
-                showError('❌ Name must be at least 2 characters!');
+                showRegisterError('❌ Name must be at least 2 characters');
                 return;
             }
 
             if (password.length < 6) {
-                showError('❌ Password must be at least 6 characters!');
+                showRegisterError('❌ Password must be at least 6 characters');
                 return;
             }
             
             if (password !== confirmPassword) {
-                showError('❌ Passwords do not match!');
+                showRegisterError('❌ Passwords do not match');
+                return;
+            }
+
+            if (!termsAccepted) {
+                showRegisterError('❌ Please accept terms and conditions');
                 return;
             }
             
-            // Disable button and show loading
             btn.disabled = true;
             btn.innerHTML = '<span class="loader"></span> Creating Account...';
             
             try {
-                // Create user in Firebase Auth
                 const userCredential = await createUserWithEmailAndPassword(auth, email, password);
                 const user = userCredential.user;
                 
-                console.log('✅ User created in Auth:', user.uid);
-                
-                // Update profile with name
                 await updateProfile(user, { displayName: name });
-                console.log('✅ Profile updated with name');
                 
-                // Save user data to Realtime Database
                 await set(ref(database, 'users/' + user.uid), {
                     name: name,
                     email: email,
                     createdAt: new Date().toISOString()
                 });
-                console.log('✅ User saved to database');
                 
-                // Save to localStorage
                 localStorage.setItem('currentUser', JSON.stringify({
                     uid: user.uid,
                     name: name,
                     email: email
                 }));
                 
-                // Show success message
-                showSuccess('✅ Account created successfully! Redirecting...');
-                
-                // Reset form
+                showRegisterSuccess('✅ Account created successfully! Redirecting...');
                 document.getElementById('registerForm').reset();
                 
-                // Redirect after 1.5 seconds
                 setTimeout(() => {
                     window.location.href = 'dash.html';
                 }, 1500);
                 
             } catch (error) {
-                console.error('❌ Registration error:', error);
+                console.error('Registration error:', error);
                 
                 let errorMessage = 'Registration failed! ';
                 
@@ -393,15 +757,13 @@
                     errorMessage = '❌ ' + error.message;
                 }
                 
-                showError(errorMessage);
-                
-                // Re-enable button
+                showRegisterError(errorMessage);
                 btn.disabled = false;
                 btn.textContent = 'Create Account';
             }
         });
 
-        // Login Handler
+        // ===== LOGIN HANDLER =====
         document.getElementById('loginForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             
@@ -409,10 +771,10 @@
             const password = document.getElementById('loginPassword').value;
             const btn = document.getElementById('loginBtn');
             
-            clearError();
+            clearErrors();
             
             if (!email || !password) {
-                showError('❌ Please enter email and password!');
+                showLoginError('❌ Please enter email and password');
                 return;
             }
             
@@ -429,15 +791,14 @@
                     email: user.email
                 }));
                 
-                console.log('✅ Login successful:', user.uid);
-                showSuccess('✅ Login successful! Redirecting...');
+                showLoginSuccess('✅ Login successful! Redirecting...');
                 
                 setTimeout(() => {
                     window.location.href = 'dash.html';
                 }, 1500);
                 
             } catch (error) {
-                console.error('❌ Login error:', error);
+                console.error('Login error:', error);
                 
                 let errorMessage = 'Login failed! ';
                 
@@ -451,34 +812,47 @@
                     errorMessage = '❌ ' + error.message;
                 }
                 
-                showError(errorMessage);
+                showLoginError(errorMessage);
                 btn.disabled = false;
-                btn.textContent = 'Login';
+                btn.textContent = 'Sign In';
             }
         });
 
-        function showError(message) {
-            const errorDiv = document.getElementById('errorMessage');
+        function showLoginError(message) {
+            const errorDiv = document.getElementById('loginError');
             errorDiv.textContent = message;
-            errorDiv.style.display = 'block';
             errorDiv.style.background = '#fee2e2';
             errorDiv.style.color = '#ef4444';
             errorDiv.classList.add('show');
         }
 
-        function showSuccess(message) {
-            const errorDiv = document.getElementById('errorMessage');
+        function showLoginSuccess(message) {
+            const errorDiv = document.getElementById('loginError');
             errorDiv.textContent = message;
-            errorDiv.style.display = 'block';
             errorDiv.style.background = '#d1fae5';
             errorDiv.style.color = '#10b981';
             errorDiv.classList.add('show');
         }
 
-        function clearError() {
-            const errorDiv = document.getElementById('errorMessage');
-            errorDiv.style.display = 'none';
-            errorDiv.classList.remove('show');
+        function showRegisterError(message) {
+            const errorDiv = document.getElementById('registerError');
+            errorDiv.textContent = message;
+            errorDiv.style.background = '#fee2e2';
+            errorDiv.style.color = '#ef4444';
+            errorDiv.classList.add('show');
+        }
+
+        function showRegisterSuccess(message) {
+            const errorDiv = document.getElementById('registerError');
+            errorDiv.textContent = message;
+            errorDiv.style.background = '#d1fae5';
+            errorDiv.style.color = '#10b981';
+            errorDiv.classList.add('show');
+        }
+
+        function clearErrors() {
+            document.getElementById('loginError').classList.remove('show');
+            document.getElementById('registerError').classList.remove('show');
         }
     </script>
 </body>
