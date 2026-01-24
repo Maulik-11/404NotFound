@@ -2010,7 +2010,7 @@
                         currentXP: xp,
                         xpInLevel: xpInCurrentLevel,
                         xpForNext: xpForNextLevel,
-                        progress: (xpInCurrentLevel / xpForNext) * 100
+                        progress: (xpInCurrentLevel / xpForNextLevel) * 100
                     };
                 }
             }
@@ -2683,30 +2683,68 @@
 
     function updateGamificationUI() {
         try {
+            console.log('🔄 START updateGamificationUI');
+            
             if (!userProfile) {
-                console.warn('userProfile not available for UI update');
+                console.warn('❌ userProfile not available for UI update');
                 return;
             }
             
-            const levelInfo = gamificationEngine.calculateLevel(userProfile.xp);
+            console.log('📊 Current userProfile.xp:', userProfile.xp);
             
+            const levelInfo = gamificationEngine.calculateLevel(userProfile.xp);
+            console.log('📊 Level info:', levelInfo);
+            
+            // Get elements from DOM
             const userLevelEl = document.getElementById('userLevel');
             const userXpEl = document.getElementById('userXP');
             const xpProgressEl = document.getElementById('xpProgress');
             const xpTextEl = document.getElementById('xpText');
             
-            if (userLevelEl) userLevelEl.textContent = `Level ${levelInfo.level} - ${levelInfo.name}`;
-            if (userXpEl) userXpEl.textContent = `${userProfile.xp} XP`;
-            if (xpProgressEl) xpProgressEl.style.width = levelInfo.progress + '%';
-            if (xpTextEl) xpTextEl.textContent = `${levelInfo.xpInLevel} / ${levelInfo.xpForNext} XP to next level`;
+            console.log('🔍 Elements found - Level:', !!userLevelEl, 'XP:', !!userXpEl, 'Progress:', !!xpProgressEl, 'Text:', !!xpTextEl);
             
-            console.log('✅ Gamification UI updated - XP:', userProfile.xp, 'Level:', levelInfo.level);
+            // Update each element and log
+            if (userLevelEl) {
+                const newText = `Level ${levelInfo.level} - ${levelInfo.name}`;
+                userLevelEl.textContent = newText;
+                console.log('✅ Level updated to:', newText);
+            } else {
+                console.warn('⚠️ userLevel element not found');
+            }
             
+            if (userXpEl) {
+                const newText = `${userProfile.xp} XP`;
+                userXpEl.textContent = newText;
+                console.log('✅ XP text updated to:', newText);
+            } else {
+                console.warn('⚠️ userXP element not found');
+            }
+            
+            if (xpProgressEl) {
+                const newWidth = levelInfo.progress + '%';
+                xpProgressEl.style.width = newWidth;
+                console.log('✅ Progress bar updated to:', newWidth);
+            } else {
+                console.warn('⚠️ xpProgress element not found');
+            }
+            
+            if (xpTextEl) {
+                const newText = `${levelInfo.xpInLevel} / ${levelInfo.xpForNext} XP to next level`;
+                xpTextEl.textContent = newText;
+                console.log('✅ XP info updated to:', newText);
+            } else {
+                console.warn('⚠️ xpText element not found');
+            }
+            
+            console.log('✅ COMPLETE updateGamificationUI - Final XP:', userProfile.xp, 'Level:', levelInfo.level);
+            
+            // Re-render other sections
             renderAchievements();
             renderChallenges();
             renderLeaderboard();
         } catch (error) {
-            console.error('Error updating gamification UI:', error);
+            console.error('❌ CRITICAL Error in updateGamificationUI:', error);
+            console.error('Error stack:', error.stack);
         }
     }
 
@@ -2800,6 +2838,7 @@
             }
             saveUserProfile();
             renderChallenges();
+            updateGamificationUI();
             showNotification(`🏆 Challenge Started: ${challenge.name}`, 'success');
         }
     };
@@ -3314,16 +3353,40 @@
 
             if (challenge.progress >= challenge.target && !challenge.completed) {
                 challenge.completed = true;
-                userProfile.xp += challenge.reward;
+                
+                // ✅ ENSURE userProfile exists
+                if (!userProfile) {
+                    userProfile = { xp: 0, level: 1, achievements: [], activeChallenges: [], streak: 0, challenges: [] };
+                }
+                
+                // ✅ ENSURE xp exists
+                if (typeof userProfile.xp !== 'number') {
+                    userProfile.xp = 0;
+                }
+                
+                // ✅ ADD XP
+                const previousXP = userProfile.xp;
+                userProfile.xp = userProfile.xp + challenge.reward;
+                
+                console.log(`✅ Challenge Completed: ${challenge.name}!`);
+                console.log(`   Previous XP: ${previousXP}, Reward: +${challenge.reward}, New XP: ${userProfile.xp}`);
+                
+                // ✅ SAVE TO STORAGE
                 saveUserProfile();
+                console.log('✅ Profile saved with new XP');
+                
                 showNotification(`🏆 Challenge Completed: ${challenge.name}! +${challenge.reward} XP`, 'success');
                 createConfetti(20);
+                
+                // ✅ UPDATE UI IMMEDIATELY
                 updateGamificationUI();
+                console.log('✅ UI Updated');
             }
         });
 
         saveUserProfile();
         renderChallenges();
+        updateGamificationUI();
     }
 
     // ✅ Helper function to get expenses from localStorage
