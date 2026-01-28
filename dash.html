@@ -14,25 +14,72 @@
         }
 
         :root {
-            --primary-color: #6366f1;
-            --secondary-color: #8b5cf6;
+            --primary-color: #a855f7;
+            --secondary-color: #6366f1;
             --success-color: #10b981;
-            --danger-color: #ef4444;
-            --warning-color: #f59e0b;
-            --dark-bg: #1e293b;
-            --light-bg: #f8fafc;
-            --card-bg: #ffffff;
-            --text-primary: #0f172a;
-            --text-secondary: #64748b;
-            --border-color: #e2e8f0;
-            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            --danger-color: #f43f5e;
+            --warning-color: #fbbf24;
+            --dark-bg: #0a0a1f;
+            --light-bg: #090a0f;
+            --card-bg: rgba(15, 10, 40, 0.85);
+            --text-primary: #f1f5f9;
+            --text-secondary: #a5b4fc;
+            --border-color: rgba(168, 85, 247, 0.3);
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            --shadow-lg: 0 10px 30px rgba(168, 85, 247, 0.2);
+            --glow-purple: 0 0 30px rgba(168, 85, 247, 0.4);
+            --glow-cyan: 0 0 30px rgba(34, 211, 238, 0.4);
         }
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: var(--light-bg);
+            background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
             color: var(--text-primary);
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(ellipse at 20% 80%, rgba(168, 85, 247, 0.1) 0%, transparent 40%),
+                radial-gradient(ellipse at 80% 20%, rgba(99, 102, 241, 0.1) 0%, transparent 40%),
+                radial-gradient(ellipse at 50% 50%, rgba(34, 211, 238, 0.05) 0%, transparent 60%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(1px 1px at 20px 30px, rgba(255,255,255,0.8), transparent),
+                radial-gradient(1px 1px at 80px 70px, rgba(255,255,255,0.6), transparent),
+                radial-gradient(1px 1px at 150px 40px, rgba(255,255,255,0.7), transparent),
+                radial-gradient(1px 1px at 220px 120px, rgba(168, 85, 247, 0.8), transparent),
+                radial-gradient(1px 1px at 300px 80px, rgba(255,255,255,0.5), transparent),
+                radial-gradient(1px 1px at 380px 200px, rgba(34, 211, 238, 0.7), transparent),
+                radial-gradient(1px 1px at 460px 150px, rgba(255,255,255,0.6), transparent),
+                radial-gradient(1px 1px at 550px 60px, rgba(255,255,255,0.8), transparent),
+                radial-gradient(1px 1px at 650px 180px, rgba(255,255,255,0.5), transparent),
+                radial-gradient(1px 1px at 750px 100px, rgba(168, 85, 247, 0.6), transparent);
+            background-size: 800px 400px;
+            pointer-events: none;
+            animation: starsFloat 150s linear infinite;
+            z-index: -1;
+        }
+
+        @keyframes starsFloat {
+            from { transform: translateY(0); }
+            to { transform: translateY(-400px); }
         }
 
         @keyframes fadeIn {
@@ -72,8 +119,8 @@
         }
 
         @keyframes glow {
-            0%, 100% { box-shadow: 0 0 20px rgba(99, 102, 241, 0.3); }
-            50% { box-shadow: 0 0 40px rgba(99, 102, 241, 0.6); }
+            0%, 100% { box-shadow: 0 0 20px rgba(168, 85, 247, 0.4); }
+            50% { box-shadow: 0 0 40px rgba(168, 85, 247, 0.7), 0 0 60px rgba(34, 211, 238, 0.3); }
         }
 
         .fade-in { animation: fadeIn 0.6s ease-out; }
@@ -86,12 +133,30 @@
 
         .sidebar {
             width: 260px;
-            background: var(--dark-bg);
+            min-width: 260px;
+            max-width: 260px;
+            background: linear-gradient(180deg, #0a0a1f 0%, #1a1040 100%);
             color: white;
             padding: 20px;
             position: fixed;
             height: 100vh;
             overflow-y: auto;
+            overflow-x: hidden;
+            border-right: 1px solid rgba(168, 85, 247, 0.2);
+            box-shadow: 5px 0 30px rgba(168, 85, 247, 0.1);
+        }
+
+        .sidebar::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .sidebar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .sidebar::-webkit-scrollbar-thumb {
+            background: rgba(168, 85, 247, 0.3);
+            border-radius: 3px;
         }
 
         .sidebar-header {
@@ -100,25 +165,31 @@
 
         .sidebar-header h2 {
             font-size: 1.5em;
-            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            background: linear-gradient(135deg, #a855f7, #22d3ee);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            text-shadow: 0 0 30px rgba(168, 85, 247, 0.5);
+            white-space: nowrap;
         }
 
         .sidebar-header p {
             font-size: 0.85em;
             color: #94a3b8;
             margin-top: 5px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .user-level-card {
-            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            background: linear-gradient(135deg, #a855f7, #22d3ee);
             padding: 15px;
             border-radius: 12px;
             margin-bottom: 20px;
             text-align: center;
             animation: glow 3s ease-in-out infinite;
+            box-shadow: 0 0 30px rgba(168, 85, 247, 0.4);
         }
 
         .user-level-card h3 {
@@ -159,7 +230,7 @@
         .sidebar-nav {
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 8px;
         }
 
         .nav-item {
@@ -167,33 +238,45 @@
             align-items: center;
             gap: 12px;
             padding: 12px 15px;
-            color: #cbd5e1;
+            color: #a5b4fc;
             text-decoration: none;
             border-radius: 10px;
             transition: all 0.3s ease;
             cursor: pointer;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        .nav-item span:first-child {
+            width: 24px;
+            min-width: 24px;
+            text-align: center;
+            flex-shrink: 0;
         }
 
         .nav-item:hover, .nav-item.active {
-            background: rgba(99, 102, 241, 0.2);
+            background: rgba(168, 85, 247, 0.25);
             color: white;
+            box-shadow: 0 0 20px rgba(168, 85, 247, 0.2);
         }
 
         .nav-badge {
             margin-left: auto;
             background: var(--danger-color);
             color: white;
-            font-size: 0.75em;
-            padding: 2px 8px;
+            font-size: 0.65em;
+            padding: 2px 6px;
             border-radius: 10px;
             font-weight: 600;
+            flex-shrink: 0;
         }
 
         .main-content {
             margin-left: 260px;
             flex: 1;
             padding: 30px;
-            background: var(--light-bg);
+            background: transparent;
+            min-height: 100vh;
         }
 
         .dashboard-header {
@@ -207,7 +290,8 @@
 
         .dashboard-header h1 {
             font-size: 2em;
-            color: var(--text-primary);
+            color: #f1f5f9;
+            text-shadow: 0 0 30px rgba(168, 85, 247, 0.4);
         }
 
         .header-actions {
@@ -218,9 +302,9 @@
 
         .btn-secondary {
             padding: 10px 20px;
-            border: 2px solid var(--primary-color);
-            background: white;
-            color: var(--primary-color);
+            border: 2px solid rgba(168, 85, 247, 0.5);
+            background: rgba(15, 10, 40, 0.8);
+            color: #a5b4fc;
             border-radius: 10px;
             cursor: pointer;
             font-weight: 600;
@@ -230,6 +314,8 @@
         .btn-secondary:hover {
             background: var(--primary-color);
             color: white;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 25px rgba(168, 85, 247, 0.5);
         }
 
         .btn-export {
@@ -259,7 +345,7 @@
         }
 
         .stat-card {
-            background: var(--card-bg);
+            background: rgba(15, 10, 40, 0.85);
             padding: 25px;
             border-radius: 15px;
             box-shadow: var(--shadow);
@@ -267,17 +353,20 @@
             align-items: center;
             gap: 20px;
             transition: transform 0.3s ease;
+            border: 1px solid rgba(168, 85, 247, 0.25);
+            backdrop-filter: blur(10px);
         }
 
         .stat-card:hover {
             transform: translateY(-5px);
-            box-shadow: var(--shadow-lg);
+            box-shadow: 0 10px 30px rgba(168, 85, 247, 0.3);
+            border-color: var(--primary-color);
         }
 
         .stat-icon { font-size: 3em; }
 
         .stat-info h3 {
-            color: var(--text-secondary);
+            color: #a5b4fc;
             font-size: 0.9em;
             margin-bottom: 5px;
         }
@@ -285,8 +374,9 @@
         .stat-value {
             font-size: 1.8em;
             font-weight: 700;
-            color: var(--primary-color);
+            color: #22d3ee;
             transition: color 0.3s ease;
+            text-shadow: 0 0 15px rgba(34, 211, 238, 0.4);
         }
 
         .predictions-grid {
@@ -297,11 +387,11 @@
         }
 
         .prediction-card {
-            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            background: linear-gradient(135deg, #a855f7, #22d3ee);
             color: white;
             padding: 25px;
             border-radius: 15px;
-            box-shadow: var(--shadow-lg);
+            box-shadow: 0 10px 40px rgba(168, 85, 247, 0.4);
             position: relative;
             overflow: hidden;
         }
@@ -313,7 +403,7 @@
             right: -50%;
             width: 200%;
             height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%);
             animation: pulse 3s ease-in-out infinite;
         }
 
@@ -378,7 +468,7 @@
         }
 
         .achievement-badge {
-            background: var(--card-bg);
+            background: rgba(15, 10, 40, 0.85);
             padding: 20px;
             border-radius: 15px;
             box-shadow: var(--shadow);
@@ -386,11 +476,13 @@
             transition: all 0.3s ease;
             cursor: pointer;
             position: relative;
+            border: 1px solid rgba(168, 85, 247, 0.25);
         }
 
         .achievement-badge:hover {
             transform: translateY(-5px);
-            box-shadow: var(--shadow-lg);
+            box-shadow: 0 10px 30px rgba(168, 85, 247, 0.3);
+            border-color: var(--primary-color);
         }
 
         .achievement-badge.locked {
@@ -411,12 +503,12 @@
             font-weight: 600;
             font-size: 0.9em;
             margin-bottom: 5px;
-            color: var(--text-primary);
+            color: #f1f5f9;
         }
 
         .achievement-desc {
             font-size: 0.75em;
-            color: var(--text-secondary);
+            color: #a5b4fc;
             line-height: 1.3;
         }
 
@@ -424,12 +516,13 @@
             position: absolute;
             top: 10px;
             right: 10px;
-            background: linear-gradient(135deg, #f59e0b, #d97706);
+            background: linear-gradient(135deg, #a855f7, #22d3ee);
             color: white;
             padding: 3px 8px;
             border-radius: 10px;
             font-size: 0.7em;
             font-weight: 600;
+            box-shadow: 0 0 15px rgba(168, 85, 247, 0.4);
         }
 
         .challenges-grid {
@@ -438,18 +531,22 @@
         }
 
         .challenge-card {
-            background: var(--card-bg);
+            background: rgba(15, 10, 40, 0.85);
             padding: 20px;
             border-radius: 15px;
             box-shadow: var(--shadow);
             border-left: 5px solid var(--primary-color);
             transition: all 0.3s ease;
+            border-top: 1px solid rgba(168, 85, 247, 0.2);
+            border-right: 1px solid rgba(168, 85, 247, 0.2);
+            border-bottom: 1px solid rgba(168, 85, 247, 0.2);
         }
 
         .challenge-card:hover {
             transform: translateX(5px);
-            box-shadow: var(--shadow-lg);
+            box-shadow: 0 0 25px rgba(168, 85, 247, 0.3);
         }
+
 
         .challenge-card.active {
             border-left-color: var(--success-color);
@@ -1074,7 +1171,7 @@
     <div class="dashboard-container">
         <aside class="sidebar">
             <div class="sidebar-header">
-                <h2>🧠 WealthWise AI</h2>
+                <h2>🧠WealthWise Ai</h2>
                 <p>Emphasizes Intelligent Financial Decisions</p>
             </div>
 
@@ -1367,19 +1464,19 @@
                     <div class="about-card">
                         <h3>⚡ Technology Stack</h3>
                         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 15px;">
-                            <div style="padding: 15px; background: #f0f9ff; border-radius: 10px;">
+                            <div style="padding: 15px; background: #525352; border-radius: 10px;">
                                 <strong>🧠 AI Engine</strong><br>
                                 <small>Machine Learning Classification & Predictions</small>
                             </div>
-                            <div style="padding: 15px; background: #f0fdf4; border-radius: 10px;">
+                            <div style="padding: 15px; background: #525352; border-radius: 10px;">
                                 <strong>🔥 Firebase</strong><br>
                                 <small>Real-time Database & Authentication</small>
                             </div>
-                            <div style="padding: 15px; background: #fef3c7; border-radius: 10px;">
+                            <div style="padding: 15px; background: #525352; border-radius: 10px;">
                                 <strong>📊 Chart.js</strong><br>
                                 <small>Interactive Data Visualization</small>
                             </div>
-                            <div style="padding: 15px; background: #fce7f3; border-radius: 10px;">
+                            <div style="padding: 15px; background: #525352; border-radius: 10px;">
                                 <strong>🎮 Gamification</strong><br>
                                 <small>Custom XP, Achievements & Challenges System</small>
                             </div>
@@ -2858,7 +2955,8 @@
         leaderboard.forEach((user, index) => {
             const item = document.createElement('div');
             item.className = 'leaderboard-item';
-            item.style.background = user.isCurrentUser ? 'linear-gradient(to right, #f0f9ff, white)' : 'transparent';
+            item.style.background = user.isCurrentUser ? 'linear-gradient(to right, rgba(168, 85, 247, 0.15), rgba(34, 211, 238, 0.1))' : 'transparent';
+            item.style.borderLeft = user.isCurrentUser ? '3px solid var(--primary-color)' : 'none';
             item.innerHTML = `
                 <div class="leaderboard-rank ${index === 0 ? 'top-1' : index === 1 ? 'top-2' : index === 2 ? 'top-3' : ''}">${index + 1}</div>
                 <div class="leaderboard-avatar">${user.name.charAt(0)}</div>
